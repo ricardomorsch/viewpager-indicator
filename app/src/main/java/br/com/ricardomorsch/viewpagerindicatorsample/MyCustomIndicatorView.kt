@@ -10,6 +10,10 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import br.com.ricardomorsch.viewpagerindicator.ViewPagerIndicatorView
 
+/**
+ * @Ricardo Morsch
+ */
+
 
 class MyCustomIndicatorView(context: Context) : ViewPagerIndicatorView(context) {
 

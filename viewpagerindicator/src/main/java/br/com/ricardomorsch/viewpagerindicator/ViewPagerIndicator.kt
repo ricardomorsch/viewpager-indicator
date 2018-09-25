@@ -5,74 +5,94 @@ import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.widget.LinearLayout
 
+/**
+ * @Ricardo Morsch
+ */
+
 class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
 
-    private lateinit var viewPager: ViewPager
     private var indicatorClass: String = ""
-    private var currentSelection = -1
+    private var selectedPosition = -1
 
     constructor(context: Context) : super(context) {
-        setup(null, 0)
+        getIndicatorClass(null, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        setup(attrs, 0)
+        getIndicatorClass(attrs, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        setup(attrs, defStyle)
+        getIndicatorClass(attrs, defStyle)
     }
 
-    private fun setup(attrs: AttributeSet?, defStyle: Int) {
+    private fun getIndicatorClass(attrs: AttributeSet?, defStyle: Int) {
+
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator, defStyle, 0)
-        indicatorClass = typedArray.getString(R.styleable.ViewPagerIndicator_indicatorClass)
-        if (indicatorClass.isEmpty())
-            throw IllegalStateException("attribute indicator class is empty")
-        typedArray.recycle()
+
+        try {
+            indicatorClass = typedArray.getString(R.styleable.ViewPagerIndicator_indicatorClass)
+        } catch (e: IllegalStateException) {
+            throw IllegalStateException("Attribute indicatorClass not defined in ViewPagerIndicator layout")
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     fun attachViewPager(viewPager: ViewPager) {
         removeAllViews()
-        this.viewPager = viewPager
-        this.viewPager.addOnPageChangeListener(this)
-        this.viewPager.adapter?.let {
+        viewPager.addOnPageChangeListener(this)
+        viewPager.adapter?.let {
             addIndicators(it.count)
-            currentSelection = this.viewPager.currentItem
-            select(currentSelection)
+            setStartSelection(viewPager.currentItem)
         }
     }
 
-
     private fun addIndicators(count: Int) {
-        val clazz = Class.forName(indicatorClass)
-        val constructor = clazz.getConstructor(Context::class.java)
-
         for (index in 0 until count) {
-            val indicatorView = constructor.newInstance(context) as ViewPagerIndicatorView
-            indicatorView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            addView(indicatorView)
+            val indicatorView = instantiateIndicator()
+            addIndicatorInView(indicatorView)
             indicatorView.unselect()
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
+    private fun addIndicatorInView(indicatorView: ViewPagerIndicatorView) {
+        indicatorView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        addView(indicatorView)
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    private fun instantiateIndicator(): ViewPagerIndicatorView {
+        val className = Class.forName(indicatorClass)
+        val classConstructor = className.getConstructor(Context::class.java)
+        return classConstructor.newInstance(context) as ViewPagerIndicatorView
     }
 
-    override fun onPageSelected(position: Int) {
-        unselect(currentSelection)
-        currentSelection = position
-        select(currentSelection)
+    private fun setStartSelection(startPosition: Int) {
+        val indicatorView = getIndicatorInPosition(startPosition)
+        indicatorView.select()
+        selectedPosition = startPosition
     }
 
-    private fun select(position: Int) {
-        (getChildAt(position) as? ViewPagerIndicatorView)?.select()
+    private fun getIndicatorInPosition(position: Int): ViewPagerIndicatorView {
+        val indicatorView = getChildAt(position)
+        if (indicatorView is ViewPagerIndicatorView)
+            return indicatorView
+        else
+            throw IllegalStateException("Custom indicator view must extends ViewPagerIndicatorView")
     }
 
-    private fun unselect(position: Int) {
-        (getChildAt(position) as? ViewPagerIndicatorView)?.unselect()
+    override fun onPageSelected(newSelectedPosition: Int) {
+
+        val selectedIndicator = getIndicatorInPosition(selectedPosition)
+        selectedIndicator.unselect()
+
+        val newSelectedIndicator = getIndicatorInPosition(newSelectedPosition)
+        newSelectedIndicator.select()
+
+        selectedPosition = newSelectedPosition
     }
 
+    override fun onPageScrollStateChanged(state: Int) {}
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 }
