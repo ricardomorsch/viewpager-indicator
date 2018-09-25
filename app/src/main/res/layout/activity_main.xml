@@ -17,11 +17,12 @@
 
     <br.com.ricardomorsch.viewpagerindicator.ViewPagerIndicator
         android:id="@+id/indicator"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:indicatorClass="br.com.ricardomorsch.viewpagerindicatorsample.MyCustomIndicatorView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:indicatorClass="br.com.ricardomorsch.viewpagerindicator.ViewPagerIndicatorView"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

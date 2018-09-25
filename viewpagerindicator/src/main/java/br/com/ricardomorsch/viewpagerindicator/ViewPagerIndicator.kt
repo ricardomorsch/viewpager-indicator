@@ -32,11 +32,9 @@ class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
     }
 
     fun attachViewPager(viewPager: ViewPager) {
+        removeAllViews()
         this.viewPager = viewPager
         this.viewPager.addOnPageChangeListener(this)
-
-        removeAllViews()
-
         this.viewPager.adapter?.let {
             addIndicators(it.count)
             currentSelection = this.viewPager.currentItem

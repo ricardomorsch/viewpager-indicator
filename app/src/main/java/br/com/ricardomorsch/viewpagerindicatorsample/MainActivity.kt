@@ -11,5 +11,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewpager.adapter = SampleAdapter(supportFragmentManager)
+        indicator.attachViewPager(viewpager)
     }
 }
