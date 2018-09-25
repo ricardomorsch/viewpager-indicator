@@ -20,7 +20,7 @@ class MyCustomIndicatorView(context: Context) : ViewPagerIndicatorView(context) 
 
 }
 ```
-* Include the ViewPagerIndicator in your layout and include in ViewPagerIndicator xml tag the attribute indicatorClass point to your custom class
+* Include the ViewPagerIndicator in your layout and include in ViewPagerIndicator xml tag the attribute indicatorClass pointing to your custom class
 ```
 <android.support.constraint.ConstraintLayout
     ...
