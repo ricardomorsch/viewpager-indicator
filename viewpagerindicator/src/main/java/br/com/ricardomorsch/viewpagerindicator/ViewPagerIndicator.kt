@@ -15,18 +15,18 @@ class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
     private var selectedPosition = -1
 
     constructor(context: Context) : super(context) {
-        getIndicatorClass(null, 0)
+        setIndicatorClass(null, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        getIndicatorClass(attrs, 0)
+        setIndicatorClass(attrs, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        getIndicatorClass(attrs, defStyle)
+        setIndicatorClass(attrs, defStyle)
     }
 
-    private fun getIndicatorClass(attrs: AttributeSet?, defStyle: Int) {
+    private fun setIndicatorClass(attrs: AttributeSet?, defStyle: Int) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator, defStyle, 0)
 
