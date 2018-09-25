@@ -1,10 +1,10 @@
-#ViewPager Indicator for Android in Kotlin
+# ViewPager Indicator for Android in Kotlin
 Create custom indicator for your viewpagers
 
-##Installing
+## Installing
 For now, copy the class in your project.
 
-##How to use:
+## How to use:
 * Create a custom class extending the abstract class ViewPagerIndicatorView and implements the behaviors "selected" and "unselected"
 ```
 class MyCustomIndicatorView(context: Context) : ViewPagerIndicatorView(context) {
