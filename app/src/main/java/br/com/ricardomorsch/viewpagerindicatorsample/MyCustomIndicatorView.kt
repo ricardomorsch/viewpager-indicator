@@ -11,9 +11,8 @@ import android.widget.LinearLayout
 import br.com.ricardomorsch.viewpagerindicator.ViewPagerIndicatorView
 
 /**
- * @Ricardo Morsch
+ * Ricardo Morsch
  */
-
 
 class MyCustomIndicatorView(context: Context) : ViewPagerIndicatorView(context) {
 

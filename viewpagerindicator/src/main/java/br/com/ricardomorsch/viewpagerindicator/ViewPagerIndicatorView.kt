@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.FrameLayout
 
 /**
- * @Ricardo Morsch
+ * Ricardo Morsch
  */
 
 abstract class ViewPagerIndicatorView(context: Context) : FrameLayout(context) {

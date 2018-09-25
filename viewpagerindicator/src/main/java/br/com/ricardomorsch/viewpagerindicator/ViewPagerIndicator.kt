@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 
 /**
- * @Ricardo Morsch
+ * Ricardo Morsch
  */
 
 class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
@@ -51,12 +51,12 @@ class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
     private fun addIndicators(count: Int) {
         for (index in 0 until count) {
             val indicatorView = instantiateIndicator()
-            addIndicatorInView(indicatorView)
+            addIndicatorIntoView(indicatorView)
             indicatorView.unselect()
         }
     }
 
-    private fun addIndicatorInView(indicatorView: ViewPagerIndicatorView) {
+    private fun addIndicatorIntoView(indicatorView: ViewPagerIndicatorView) {
         indicatorView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         addView(indicatorView)
     }
@@ -68,12 +68,12 @@ class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
     }
 
     private fun setStartSelection(startPosition: Int) {
-        val indicatorView = getIndicatorInPosition(startPosition)
+        val indicatorView = getIndicator(startPosition)
         indicatorView.select()
         selectedPosition = startPosition
     }
 
-    private fun getIndicatorInPosition(position: Int): ViewPagerIndicatorView {
+    private fun getIndicator(position: Int): ViewPagerIndicatorView {
         val indicatorView = getChildAt(position)
         if (indicatorView is ViewPagerIndicatorView)
             return indicatorView
@@ -83,10 +83,10 @@ class ViewPagerIndicator : LinearLayout, ViewPager.OnPageChangeListener {
 
     override fun onPageSelected(newSelectedPosition: Int) {
 
-        val selectedIndicator = getIndicatorInPosition(selectedPosition)
+        val selectedIndicator = getIndicator(selectedPosition)
         selectedIndicator.unselect()
 
-        val newSelectedIndicator = getIndicatorInPosition(newSelectedPosition)
+        val newSelectedIndicator = getIndicator(newSelectedPosition)
         newSelectedIndicator.select()
 
         selectedPosition = newSelectedPosition
